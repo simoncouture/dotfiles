@@ -1,0 +1,187 @@
+" vimrc example file:
+"
+" Use Vim settings, rather then Vi settings (much better!).
+" This must be first, because it changes other options as a side effect.
+set nocompatible
+
+" allow backspacing over everything in insert mode
+set backspace=indent,eol,start
+
+"Show line numbers
+set number
+
+"Vundle
+filetype off  "Required for Vundle, will turn it back on later
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'nvie/vim-flake8'
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+
+" Enable file type detection.
+" Use the default filetype settings, so that mail gets 'tw' set to 72,
+" 'cindent' is on in C files, etc.
+" Also load indent files, to automatically do language-dependent indenting.
+filetype plugin indent on
+
+
+if has("vms")
+  set nobackup		" do not keep a backup file, use versions instead
+else
+  set backup		" keep a backup file
+endif
+set history=50		" keep 50 lines of command line history
+set ruler		" show the cursor position all the time
+set showcmd		" display incomplete commands
+set incsearch		" do incremental searching
+
+" Don't use Ex mode, use Q for formatting
+"map Q gq
+
+" CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
+" so that you can undo CTRL-U after inserting a line break.
+inoremap <C-U> <C-G>u<C-U>
+
+" In many terminal emulators the mouse works just fine, thus enable it.
+if has('mouse')
+  set mouse=a
+endif
+
+" Switch syntax highlighting on, when the terminal has colors
+" Also switch on highlighting the last used search pattern.
+if &t_Co > 2 || has("gui_running")
+  syntax on
+  set hlsearch 
+  nmap <silent> ,/ :nohlsearch<CR>
+endif
+
+" Only do this part when compiled with support for autocommands.
+if has("autocmd")
+
+  " Put these in an autocmd group, so that we can delete them easily.
+  augroup vimrcEx
+  au!
+
+   set shellslash
+  " For all text files set 'textwidth' to 78 characters.
+  autocmd FileType text setlocal textwidth=78
+
+  " When editing a file, always jump to the last known cursor position.
+  " Don't do it when the position is invalid or when inside an event handler
+  " (happens when dropping a file on gvim).
+  " Also don't do it when the mark is in the first line, that is the default
+  " position when opening a file.
+  autocmd BufReadPost *
+    \ if line("'\"") > 1 && line("'\"") <= line("$") |
+    \   exe "normal! g`\"" |
+    \ endif
+
+  augroup END
+
+else
+
+  set autoindent		" always set autoindenting on
+
+endif " has("autocmd")
+
+" Convenient command to see the difference between the current buffer and the
+" file it was loaded from, thus the changes you made.
+" Only define it when not defined already.
+if !exists(":DiffOrig")
+  command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
+		  \ | wincmd p | diffthis
+endif
+syntax on
+
+"End of vimrc example file
+
+set foldmethod=indent
+set foldlevel=99
+
+" Windows movement mappings
+map <c-j> <c-w>j
+map <c-k> <c-w>k
+map <c-l> <c-w>l
+map <c-h> <c-w>h
+
+" Redefine leader key from \ to ,
+let mapleader=","
+
+"For supertab plugin
+"au FileType python set omnifunc=pythoncomplete#Complete
+"let g:SuperTabDefaultCompletionType = "context"
+"set completeopt=menuone,longest,preview
+" If you prefer the Omni-Completion tip window to close when a selection is
+" made, these lines close it on movement in insert mode or when leaving
+" insert mode
+"autocmd CursorMovedI * if pumvisible() == 0|silent! pclose|endif
+"autocmd InsertLeave * if pumvisible() == 0|silent! pclose|endif
+
+" Tag navigation remap
+" To be figured out
+
+" Color scheme
+set t_Co=256
+set background=light
+colorscheme hemisu
+
+" Shortcut to edit this file
+nmap <silent> <leader>ev :e $MYVIMRC<cr>
+
+" Remap of CTRL-6 command to swap between 2 buffers
+map <c-e> <c-6>
+
+" Allows edited buffers to be hidden
+set hidden
+
+"F5 mapping to run python scripts
+autocmd BufRead *.py nmap <F5> :!python %<CR>
+
+"Run Flake8 after every buffer save
+autocmd BufWritePost *.py call Flake8()
+
+"Shortcut to insert breakpoints
+nmap ,bp iimport pdb; pdb.set_trace();
+
+"Remap esc key to jj
+inoremap jj <esc>
+
+"For Vim-Latex
+set grepprg=grep\ -nH\ $*
+let g:tex_flavor='latex'
+
+"Always display file name and [+] sign
+set laststatus=2
+
+"Mappings for quickfix
+nnoremap <leader>qq :cn<CR>
+nnoremap <leader>qp :cp<CR>
+nnoremap <leader>qc :cclose<CR>
+nnoremap <leader>qf :cc 1<CR>
+
+"Nerdcommenter remaps
+let g:NERDCreateDefaultMappings = 0
+nmap <leader>c <Plug>NERDCommenterToggle
+vmap <leader>c <Plug>NERDCommenterToggle
+let g:NERDSpaceDelims = 1
+let g:NERDCustomDelimiters = {'python': {'left': '#'}}
+
+au FileType c,cpp,cu,h,hpp setlocal comments-=:// comments+=f://
+
+"Have You complete me not prompt when loading .ycm_extra_conf.py file
+let g:ycm_confirm_extra_conf=0
+
+"Open with maximimzed window on Windows
+au GUIEnter * simalt ~x
+
+"For Latex suite (grep program for aut-completion)
+"set grepprg="C:\Program Files (x86)\GnuWin32\bin\grep" -nH\ $*
+

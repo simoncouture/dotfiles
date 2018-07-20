@@ -1,0 +1,7 @@
+[user]
+	email = scouture@ucsd.edu
+	name = simoncouture
+[core]
+	editor = vim
+[push]
+	default = simple
