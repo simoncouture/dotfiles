@@ -121,3 +121,8 @@ alias cls='printf "\033c"'
 export PATH=$PATH:.
 export PATH=$PATH:/home/simoncouture/bin
 export VIMRUNTIME=/usr/local/share/vim/vim81
+
+# export TX02IP=10.0.3.82 #@brain
+export TX02IP=192.168.1.83 #@home
+alias jetssh='ssh nvidia@$TX02IP'
+alias jetsshX='ssh -X nvidia@$TX02IP'

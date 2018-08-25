@@ -145,6 +145,7 @@ set hidden
 "F5 mapping to run python scripts
 autocmd BufRead *.py nmap <F5> :!python %<CR>
 
+
 "Run Flake8 after every buffer save
 autocmd BufWritePost *.py call Flake8()
 
@@ -175,6 +176,9 @@ let g:NERDSpaceDelims = 1
 let g:NERDCustomDelimiters = {'python': {'left': '#'}}
 
 au FileType c,cpp,cu,h,hpp setlocal comments-=:// comments+=f://
+
+"F5 mapping to run python scripts
+autocmd FileType c,cpp,cu,h,hpp nmap <F5> :!make<CR>
 
 "Have You complete me not prompt when loading .ycm_extra_conf.py file
 let g:ycm_confirm_extra_conf=0
