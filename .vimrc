@@ -21,8 +21,9 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'Valloric/YouCompleteMe'
-Plugin 'nvie/vim-flake8'
-
+"Plugin 'nvie/vim-flake8'
+Plugin 'dusktreader/vim-flake8'
+Plugin 'rdnetto/YCM-Generator'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 
@@ -189,3 +190,16 @@ au GUIEnter * simalt ~x
 "For Latex suite (grep program for aut-completion)
 "set grepprg="C:\Program Files (x86)\GnuWin32\bin\grep" -nH\ $*
 
+let g:flake8_config_file=$HOME . '/.config/flake8'
+
+"Tabs mapping
+nmap <leader>t <C-]>
+nmap <leader>p <C-W>}
+set tags=./tags;
+
+"Vimgrep mapping
+function ShiningPath()
+	let l:src_path = expand('%:p')
+	return substitute(l:src_path, '/src.*$','/src','')
+endfunction
+nmap <leader>g "zyiw:exe "vimgrep /".@z."/gj ".ShiningPath()."/**/*.py"

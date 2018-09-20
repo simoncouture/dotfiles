@@ -57,10 +57,11 @@ uppercase no
 use_spacer none
 show_graph_scale no
 show_graph_range no
+double_buffer yes
 
 TEXT
 $hr
-${color2}${voffset 5}Intel® i-7 4870HQ 2.5 GHz: ${color1}@  ${color green}${freq} MHz   
+${color2}${voffset 5}Intel i7-4870HQ GHz: ${color1}@  ${color green}${freq} MHz   
 ${color}${goto 13}CPU 1 ${goto 81}${color green}${cpu cpu1}% ${goto 131}${color3}${cpubar cpu1 18}
 ${color}${goto 13}CPU 2 ${goto 81}${color green}${cpu cpu2}% ${goto 131}${color3}${cpubar cpu2 18}
 ${color}${goto 13}CPU 3 ${goto 81}${color green}${cpu cpu3}% ${goto 131}${color3}${cpubar cpu3 18}

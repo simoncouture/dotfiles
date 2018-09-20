@@ -37,7 +37,8 @@ fi
 
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
-    xterm-color) color_prompt=yes;;
+    # xterm-color|*-256color) color_prompt=yes;;
+    xterm-color|*-256color) color_prompt=no;;
 esac
 
 # uncomment for a colored prompt, if the terminal has the capability; turned
@@ -84,6 +85,9 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
+# colored GCC warnings and errors
+#export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+
 # some more ls aliases
 alias ll='ls -alF'
 alias la='ls -A'
@@ -112,17 +116,18 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
-source /opt/ros/indigo/setup.bash
-
-source /home/simoncouture/shining_software/use_repo.sh
 
 alias cls='printf "\033c"'
 
-export PATH=$PATH:.
-export PATH=$PATH:/home/simoncouture/bin
-export VIMRUNTIME=/usr/local/share/vim/vim81
 
-# export TX02IP=10.0.3.82 #@brain
-export TX02IP=192.168.1.83 #@home
-alias jetssh='ssh nvidia@$TX02IP'
-alias jetsshX='ssh -X nvidia@$TX02IP'
+alias netreset='sudo service network-manager restart'
+
+export TX02IP=10.30.40.222 #@brain
+# export TX02IP=192.168.1.83  #@home
+alias jetssh='ssh ubuntu@$TX02IP'
+alias jetsshX='ssh -X ubuntu@$TX02IP'
+
+export PYTHONPATH=$PYTHONPATH:/home/parallels/shining_software/src/bc_artifacts
+export PYTHONPATH=$PYTHONPATH:/home/parallels/shining_software
+export LD_LIBRARY_PATH=/usr/local/cuda-9.0/lib64:$LD_LIBRARY_PATH
+export PATH=/usr/local/cuda-9.0/bin:$PATH
