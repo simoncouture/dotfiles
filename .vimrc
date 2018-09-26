@@ -21,7 +21,7 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'Valloric/YouCompleteMe'
-"Plugin 'nvie/vim-flake8'
+" Plugin 'nvie/vim-flake8'
 Plugin 'dusktreader/vim-flake8'
 Plugin 'rdnetto/YCM-Generator'
 " All of your Plugins must be added before the following line
@@ -152,6 +152,7 @@ autocmd BufWritePost *.py call Flake8()
 
 "Shortcut to insert breakpoints
 nmap ,bp iimport pdb; pdb.set_trace();
+nmap ,ibp ifrom shining_software.costmaps.map_drawing_utils import *;
 
 "Remap esc key to jj
 inoremap jj <esc>
@@ -183,6 +184,9 @@ autocmd FileType c,cpp,cu,h,hpp nmap <F5> :!make<CR>
 
 "Have You complete me not prompt when loading .ycm_extra_conf.py file
 let g:ycm_confirm_extra_conf=0
+
+"Close preview window after insertion
+" let g:ycm_autoclose_preview_window_after_insertion = 1
 
 "Open with maximimzed window on Windows
 au GUIEnter * simalt ~x
