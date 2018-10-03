@@ -1,0 +1,162 @@
+INSERTIONS
+i		Insert at cursor
+a		Insert after cursor
+o		Insert a line below cursor
+
+DELETIONS / MODIFICATIONS
+d-mov	Deletion depending on movement command
+x		Delete character under cursor
+dd or D	Delete line
+dw		Delete word
+u		Undo last edit
+U		Undo changes on last line edited
+ctrl-r	Redo changes
+.		Repeat last delete command
+J		Join next line with current line
+r+char	Replace character under cursor
+~		Change character case
+
+c		Same behavior as d but insert mode follows
+
+MOVEMENT
+w		Move forward one word
+3w		Move forward 3 words
+b		Move backward one word
+$		Move to end of line
+0 		Move to beginning of line
+^		Move to first non-blank character of line
+G		Move to end of file
+gg		Move to beginning of file
+3G		Move to line #3
+e		Move to end of word
+zz		Move screen so that current line is in the middle of screen
+zt		Move screen so that current line is at the top of the screen
+zb		Move screen so that current line is at the bottom of the screen
+ctrl-U	Scroll a half-page up
+ctrl-D	Scroll a half-page down
+
+SEARCH
+f+char	Forward search to character in same line
+F+char	Backward search to character in same line			
+t+char	Forward search to before character in same line
+T+char	Backward search to before character in same line
+
+/word	Forward search for word in document
+?words	Backward search for word
+n		Goto next occurrence of searched word
+N		Reverse search direction and goto next occurrence of searched word
+/<up>	Navigate search history
+/<down>
+
+SPECIAL SEARCH PATTERNS
+^		Beginning of line
+$		End of line
+.		Wildcard character
+
+MARKS
+ma		Place mark a at cursor position (can be a-z)
+`a		Go to mark a
+'a		Go to beginning of line corresponding to mark a
+:marks	List all marks
+
+COPY/PASTE
+y-mov	Yank depending on accompanying movement
+yy		Yank the current line
+Y		Yank the current line
+p		Put after the cursor
+P		Put before the cursor
+
+COMMANDS
+ZZ		Write to file and close current file (same as :wq)
+ctrl-G	Displays position in file
+q+char	Records a macro under char (q to stop recording)
+@+char	Executes macro char
+! mov cmd	Executes linux cmd with input dictated by movement, and replaces input by output of cmd
+!! mov cmd	Executes linux cmd with the current line as input, and replaces that line with output of cmd
+= mov		Indent selection selected through a movement command
+
+FILES
+:e	file	Close current file and open 'file' for editing
+:n			Move to next file in the list of edited files
+:N			Move to previous file
+:args		Display list of edited files
+:first		Move to first file
+:last		Move to last file
+
+
+WINDOWS
+:split		Split the current window with the same current file
+:split file	Split the current window and opens 'file' in new window
+:3split		Same as split but new window is 3 lines high
+:vert split	Same as split but vertically
+:new		Split the current window and edits a new file
+3ctrl-W +	Adds 3 lines to the current window (default is 1 line)
+4ctrl-W - 	Removes 4 lines to the current window
+ctrl-W _	Maximize size of current window
+5ctrl-W _	Makes current window 5 lines high
+ctrl-W = 	Make all windows the same size
+ctrl-w r	Rotate windows in current row
+ctrl-W t	Move cursor to top-left window
+ctrl-W K	Move current window at the very top, using the full width of the screen
+ctrl-W J 	Move current window at the bottom, using the full width of the screen 
+:mksession[!] 			Save the current editing session under Session.vim
+:source Session.vim 	Restore editing session
+
+BUFFERS
+:ls			List buffers
+:b 3		Display buffer 3
+:b file		Display buffer corresponding to 'file'
+:sb			Same as b but displays buffer in a new split window
+:vert sb	Same as sb but vertical split
+:vert belowright sb	Same but open split to the right
+:bn			Open next buffer
+:bp			Open previous buffer
+:bN			Open previous buffer
+:bfirst		Open first buffer
+:blast		Open last buffer
+ctrl-6		Move to previously displayed buffer
+:bd			Delete current buffer from buffer list
+:bd 1 2 3	Delete buffers 1, 2 and 3 from buffer list
+
+REGISTERS
+"ayy		Copy current line to register a
+"Ayy		Append current line to register a
+"ap			Put register a after the cursor
+:reg		Display all defined registers
+"+			+ is the system clipboard
+"*			* is the mouse highlight clipboard
+note: only y uses the default " register
+
+
+??		Jump to tag
+ctrl-T	Pop a tag off the stack
+
+VISUAL MODE
+v			Character visual mode
+V			Line visual mode (only full lines are selected)
+<			Remove one level of indentation on selected lines
+>			Add one level of indentation
+
+FOLDING
+set foldlevel=0 or zM	Close all folds
+set foldlevel=00 or zR	Open all folds
+zO						Open all folds under cursor
+zC						Close all folds under cursor
+zA						Toggle open all and close all
+
+FORMATTING
+gqip		Reformat the current paragraph
+
+CODE NAVIGATION
+,t			Jump to tag -> using YCM for this
+,p			Open tag in a split
+,f			Find occurences of identifier under cursor and display quickfix list
+:pc			Close preview window
+,g			Search for word under cursor throughout code
+:cw			Open window containing search results from ,g
+
+VIM FUNCTIONS
+:function name-of-function-here		Displays definition of function
+:verb function name-of-function-here 	Displays definition of function and the file where this definition is taken from
+:map                                    Display defined keyboard mappings
+:verbose map                            Display defined keyboard mappings and where they are defined

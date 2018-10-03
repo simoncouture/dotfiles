@@ -186,7 +186,11 @@ autocmd FileType c,cpp,cu,h,hpp nmap <F5> :!make<CR>
 let g:ycm_confirm_extra_conf=0
 
 "Close preview window after insertion
-" let g:ycm_autoclose_preview_window_after_insertion = 1
+let g:ycm_autoclose_preview_window_after_insertion = 1
+
+"Find (YcmComplete GoToReferences) mapping:
+nnoremap <leader>f :YcmCompleter GoToReferences<CR>
+nnoremap <leader>t :YcmCompleter GoTo<CR>
 
 "Open with maximimzed window on Windows
 au GUIEnter * simalt ~x
@@ -197,8 +201,8 @@ au GUIEnter * simalt ~x
 let g:flake8_config_file=$HOME . '/.config/flake8'
 
 "Tabs mapping
-nmap <leader>t <C-]>
-nmap <leader>p <C-W>}
+" nmap <leader>t <C-]>
+nmap <leader>p <C-W><C-]>
 set tags=./tags;
 
 "Vimgrep mapping
