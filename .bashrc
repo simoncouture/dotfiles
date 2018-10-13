@@ -122,12 +122,15 @@ alias cls='printf "\033c"'
 
 alias netreset='sudo service network-manager restart'
 
-export TX02IP=10.30.40.222 #@brain
+# export TX02IP=10.30.40.222 #@brain
+export TX02IP=10.30.30.96 #@brain
 # export TX02IP=192.168.1.83  #@home
 alias jetssh='ssh ubuntu@$TX02IP'
 alias jetsshX='ssh -X ubuntu@$TX02IP'
 
-export PYTHONPATH=$PYTHONPATH:/home/parallels/shining_software/src/bc_artifacts
-export PYTHONPATH=$PYTHONPATH:/home/parallels/shining_software
+alias sandssh='ssh brain@sandbox'
+
 export LD_LIBRARY_PATH=/usr/local/cuda-9.0/lib64:$LD_LIBRARY_PATH
 export PATH=/usr/local/cuda-9.0/bin:$PATH
+
+# export PYTHONPATH=$PYTHONPATH:$HOME/.local/lib/python2.7/site-packages
