@@ -22,8 +22,9 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'Valloric/YouCompleteMe'
 " Plugin 'nvie/vim-flake8'
-Plugin 'dusktreader/vim-flake8'
+" Plugin 'dusktreader/vim-flake8'  " Need to git checkout dusktreader/64_config_file_option
 Plugin 'rdnetto/YCM-Generator'
+Plugin 'w0rp/ale'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 
@@ -148,7 +149,7 @@ autocmd BufRead *.py nmap <F5> :!python %<CR>
 
 
 "Run Flake8 after every buffer save
-autocmd BufWritePost *.py call Flake8()
+" autocmd BufWritePost *.py call Flake8()
 
 "Shortcut to insert breakpoints
 nmap ,bp iimport pdb; pdb.set_trace();
@@ -211,3 +212,11 @@ function ShiningPath()
 	return substitute(l:src_path, '/src.*$','/src','')
 endfunction
 nmap <leader>g "zyiw:exe "vimgrep /".@z."/gj ".ShiningPath()."/**/*.py"
+
+"ALE settings
+let g:ale_set_quickfix = 1
+let g:ale_echo_msg_error_str = 'E'
+let g:ale_echo_msg_warning_str = 'W'
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_lint_on_enter = 0
