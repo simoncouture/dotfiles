@@ -21,7 +21,7 @@ function! ale_linters#python#sandboxpylint#Handle(buffer, lines) abort
     "
     " test.py:4:4: W0101 (unreachable) Unreachable code
     " let l:pattern = '\v^[a-zA-Z]?:?[^:]+:(\d+):(\d+): ([[:alnum:]]+) \(([^(]*)\) (.*)$'
-    let l:pattern = '\v^([a-zA-Z]): (\d+), (\d+): (.+) \((.+)\)$'
+    let l:pattern = '\v^([a-zA-Z]): ?(\d+), ?(\d+): (.+) \((.+)\)$'
     let l:output = []
 
     for l:match in ale#util#GetMatches(a:lines, l:pattern)
