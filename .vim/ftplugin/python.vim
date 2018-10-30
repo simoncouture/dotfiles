@@ -15,9 +15,15 @@ function! CheckIfSandboxRunning()
 	endif
 	"Check if path to shining match current file path
 	let l:match2 = matchlist(l:match[1], '\v^(.*/shining_software)/build/rootfs.nspawn')
+	if (len(l:match2) == 0)
+	    continue
+	endif
 	let l:sandboxpath = l:match2[1]
         let l:filepath = expand('%:p')
 	let l:match3 = matchlist(l:filepath, '\v^(.*/shining_software)/src')
+	if (len(l:match3) == 0)
+	    continue
+	endif
 	let l:filepath = l:match3[1]
 	if (l:filepath == l:sandboxpath) 
 	    return 1
