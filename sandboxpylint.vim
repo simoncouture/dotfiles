@@ -10,7 +10,10 @@ function! ale_linters#python#sandboxpylint#GetCommand(buffer) abort
     let l:local_path = expand('#' . a:buffer . ':p')
     let l:remote_path =  substitute(l:local_path, '^.*shining_software/src/shining_software/','/opt/shining_software/shining_software/', '')
 
-    return 'sshpass -p brain ssh brain@sandbox'
+    " return 'sshpass -p brain ssh -o StrictHostKeyChecking=no brain@sandbox'
+    " \   . ' "cd /opt/shining_software; ./test_pylint'
+    " \   . ' ' . l:remote_path . '"'
+    return 'sshpass -p brain ssh -o StrictHostKeyChecking=no brain@sandbox'
     \   . ' "source /opt/shining_software/use_repo.sh; pylint --rcfile=/opt/shining_software/pylint_rc'
     \   . ' --output-format text --reports n'
     \   . ' ' . l:remote_path . '"'
