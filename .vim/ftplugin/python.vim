@@ -14,7 +14,7 @@ function! CheckIfSandboxRunning()
 	    continue
 	endif
 	"Check if path to shining match current file path
-	let l:match2 = matchlist(l:match[1], '\v^(.*/shining_software)/build/rootfs.nspawn')
+	let l:match2 = matchlist(l:match[1], '\v^(.*/shining_software)/build/rootfs.shining')
 	if (len(l:match2) == 0)
 	    continue
 	endif
@@ -36,5 +36,6 @@ let sandboxrunning = CheckIfSandboxRunning()
 if (sandboxrunning == 1)
     let b:ale_linters = ['flake8', 'sandboxpylint']
 else
+    echo 'sandbox_not_running'
     let b:ale_linters = ['flake8']
 endif
