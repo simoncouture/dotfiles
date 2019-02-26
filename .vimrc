@@ -25,6 +25,7 @@ Plugin 'Valloric/YouCompleteMe'
 " Plugin 'dusktreader/vim-flake8'  " Need to git checkout dusktreader/64_config_file_option
 Plugin 'rdnetto/YCM-Generator'
 Plugin 'w0rp/ale'
+Plugin 'junegunn/fzf.vim'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 
@@ -190,8 +191,8 @@ let g:ycm_confirm_extra_conf=0
 let g:ycm_autoclose_preview_window_after_insertion = 1
 
 "Find (YcmComplete GoToReferences) mapping:
-nnoremap <leader>f :YcmCompleter GoToReferences<CR>
-nnoremap <leader>t :YcmCompleter GoTo<CR>
+" nnoremap <leader>f :YcmCompleter GoToReferences<CR>
+" nnoremap <leader>t :YcmCompleter GoTo<CR>
 
 "Open with maximimzed window on Windows
 au GUIEnter * simalt ~x
@@ -202,7 +203,7 @@ au GUIEnter * simalt ~x
 let g:flake8_config_file=$HOME . '/.config/flake8'
 
 "Tabs mapping
-" nmap <leader>t <C-]>
+nmap <leader>t <C-]>
 nmap <leader>p <C-W><C-]>
 set tags=./tags;
 
@@ -220,3 +221,47 @@ let g:ale_echo_msg_warning_str = 'W'
 let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_lint_on_enter = 0
+
+"Enable fzf
+set rtp+=~/.fzf
+
+" Customize fzf colors to match your color scheme
+
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'border':  ['fg', 'Ignore'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
+
+"Custom Ag command for fzf to search only file content
+"and use root of search corresponding to the tags file
+function! AgProjectFun(query, ...)
+  if type(a:query) != type('')
+    echom 'Invalid query argument'
+    return
+  endif
+  let query = empty(a:query) ? '^(?=.)' : a:query
+  let args = copy(a:000)
+  let ag_opts = len(args) > 1 && type(args[0]) == type('') ? remove(args, 0) : ''
+  let tagfile_list = tagfiles()
+  let tagfile_path = empty(tagfile_list) ? '' : fnamemodify(tagfile_list[0], ':p:h')
+  let command = ag_opts . ' ' . '--color-path "0;32" --color-line-number "1;35"' . ' ' . fzf#shellescape(query) . ' ' . tagfile_path
+  return call('fzf#vim#ag_raw', insert(args, command, 0))
+endfunction
+
+"Searches only file contents:
+command! -bang -nargs=* Agp call AgProjectFun(<q-args>, {'options': '--delimiter : --nth 4..'}, <bang>0)
+"Search file contents and filenames:
+command! -bang -nargs=* Agp2 call AgProjectFun(<q-args>, <bang>0)
+
+nnoremap <leader>f :Agp<CR>
+nnoremap <leader>r "zyiw:Agp <C-R>z<CR>
