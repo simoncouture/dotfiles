@@ -160,3 +160,9 @@ VIM FUNCTIONS
 :verb function name-of-function-here 	Displays definition of function and the file where this definition is taken from
 :map                                    Display defined keyboard mappings
 :verbose map                            Display defined keyboard mappings and where they are defined
+
+VIM DIFF
+]c        next difference
+[c        previous difference
+do        diff obtain
+dp        diff put
