@@ -57,10 +57,10 @@ git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 vim -c VundleUpdate -c quitall
 
 # Compile YouCompleteMe
-#sudo pip install --upgrade cryptography  # May have to do this 
+sudo pip install --upgrade cryptography  # May have to do this 
 sudo apt install build-essential cmake python3-dev
 cd ~/.vim/bundle/YouCompleteMe
-python3 install.py --clang-completer
+python3.5 install.py --clang-completer
 
 # Install ctags
 sudo apt install exuberant-ctags
