@@ -13,10 +13,12 @@ function! ale_linters#python#sandboxpylint#GetCommand(buffer) abort
     " return 'sshpass -p brain ssh -o StrictHostKeyChecking=no brain@sandbox'
     " \   . ' "cd /opt/shining_software; ./test_pylint'
     " \   . ' ' . l:remote_path . '"'
+    " return 'sshpass -p brain ssh -o StrictHostKeyChecking=no brain@sandbox'
+    " \   . ' "source /opt/shining_software/use_repo.sh; pylint --rcfile=/opt/shining_software/pylint_rc'
+    " \   . ' --output-format text --reports n'
+    " \   . ' ' . l:remote_path . '"'
     return 'sshpass -p brain ssh -o StrictHostKeyChecking=no brain@sandbox'
-    \   . ' "source /opt/shining_software/use_repo.sh; pylint --rcfile=/opt/shining_software/pylint_rc'
-    \   . ' --output-format text --reports n'
-    \   . ' ' . l:remote_path . '"'
+    \   . ' "/opt/shining_software/test_pylint -f' . l:remote_path . '"'
 endfunction
 
 function! ale_linters#python#sandboxpylint#Handle(buffer, lines) abort
@@ -28,6 +30,7 @@ function! ale_linters#python#sandboxpylint#Handle(buffer, lines) abort
     let l:output = []
 
     for l:match in ale#util#GetMatches(a:lines, l:pattern)
+	echo l:match
         "let l:failed = append(0, l:match)
         " let l:code = l:match[3]
         " if (l:code is# 'C0303')
