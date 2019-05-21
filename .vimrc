@@ -223,6 +223,10 @@ let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_lint_on_enter = 0
 
+"Function to toggle doc checking on or off
+command! -nargs=0 TestDoc call ToggleDocTestMode()
+nnoremap <leader>doc :TestDoc<CR>
+
 "Enable fzf
 set rtp+=~/.fzf
 
@@ -255,7 +259,8 @@ function! AgProjectFun(query, ...)
   let ag_opts = len(args) > 1 && type(args[0]) == type('') ? remove(args, 0) : ''
   let tagfile_list = tagfiles()
   let tagfile_path = empty(tagfile_list) ? '' : fnamemodify(tagfile_list[0], ':p:h')
-  let command = ag_opts . ' ' . '--color-path "0;32" --color-line-number "1;35"' . ' ' . fzf#shellescape(query) . ' ' . tagfile_path
+  let command = ag_opts . ' ' . '--python --color-path "0;32" --color-line-number "1;35"' . ' ' . fzf#shellescape(query) . ' ' . tagfile_path
+  echo command
   return call('fzf#vim#ag_raw', insert(args, command, 0))
 endfunction
 
@@ -266,3 +271,6 @@ command! -bang -nargs=* Agp2 call AgProjectFun(<q-args>, <bang>0)
 
 nnoremap <leader>f :Agp<CR>
 nnoremap <leader>r "zyiw:Agp <C-R>z<CR>
+
+"Turn off bracketed paste mode
+set t_BE=

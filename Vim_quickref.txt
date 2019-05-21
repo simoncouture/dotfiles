@@ -166,3 +166,7 @@ VIM DIFF
 [c        previous difference
 do        diff obtain
 dp        diff put
+
+AG fzf vim
+ALT-A	select all search results
+ALT-D   deselect all

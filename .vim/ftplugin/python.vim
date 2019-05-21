@@ -32,10 +32,31 @@ function! CheckIfSandboxRunning()
 return 0
 endfunction
 
+"Runs documentation check test
+function! ToggleDocTestMode()
+    let l:sandboxrunning = CheckIfSandboxRunning()
+    if (l:sandboxrunning == 0)
+	echo "Sandbox needs to be running to enable doc testing..."
+	return 0
+    endif
+    " echo "Sandbox is running, toggling doclint"
+    let l:index = index(b:ale_linters, 'doclint')
+    if (l:index == -1)
+        echo "Enabling doc linting"
+	call add(b:ale_linters, 'doclint')
+	" execute ":ALELint"
+    else
+	echo "Disabling doc linting"
+	call remove(b:ale_linters, l:index)
+    endif
+    echo b:ale_linters
+    return 0
+endfunction
+
+
 let sandboxrunning = CheckIfSandboxRunning()
 if (sandboxrunning == 1)
     let b:ale_linters = ['flake8', 'sandboxpylint']
 else
-    echo 'sandbox_not_running'
     let b:ale_linters = ['flake8']
 endif
