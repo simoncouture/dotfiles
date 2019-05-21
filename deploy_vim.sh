@@ -46,6 +46,7 @@ cp ~/dotfiles/.vimrc ~/
 cp -R ~/dotfiles/.vim/colors ~/.vim/
 cp -R ~/dotfiles/.vim/ftplugin ~/.vim/
 cp ~/dotfiles/sandboxpylint.vim ~/.vim/bundle/ale/ale_linters/python/
+cp ~/dotfiles/doclint.vim ~/.vim/bundle/ale/ale_linters/python/
 cp ~/dotfiles/flake8 ~/.config/
 rm -rf ~/dotfiles
 
