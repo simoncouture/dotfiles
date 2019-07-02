@@ -9,7 +9,15 @@ call ale#Set('python_pylint_auto_pipenv', 0)
 function! ale_linters#python#doclint#GetCommand(buffer) abort
     let l:local_path = expand('#' . a:buffer . ':p')
     let l:remote_path =  substitute(l:local_path, '^.*shining_software/src/shining_software/','/opt/shining_software/shining_software/', '')
-    return 'sshpass -p brain ssh -o StrictHostKeyChecking=no brain@sandbox'
+    " Check if .sandbox file exists for multiple sandboxes
+    let l:sandboxname = 'sandbox'
+    let l:root_path = substitute(l:local_path, 'src/shining_software/.*', '', '')
+    let l:sandbox_file_path = l:root_path . '.sandbox'
+    if filereadable(l:sandbox_file_path)
+        let l:sandboxname = readfile(l:sandbox_file_path)[0]
+    endif
+
+    return 'sshpass -p brain ssh -o StrictHostKeyChecking=no brain@' . l:sandboxname
     \   . ' "/opt/shining_software/run_test doc ' . l:remote_path . '"'
 endfunction
 
