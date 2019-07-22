@@ -6,7 +6,7 @@ set softtabstop=4
 "Returns 1 if a corresponding sandbox is running, 0 otherwise
 function! CheckIfSandboxRunning()
     let l:dfoutput = systemlist('df -h')
-    let l:pattern = '\v^bindfs\s+\d+\w\s+\d+\w\s+\d+\w\s+\d+\%\s+(.*)$' 
+    let l:pattern = '\v^bindfs\s+\d+\.?\d*\w\s+\d+\.?\d*\w\s+\d+\.?\d*\w\s+\d+\%\s+(.*)$'
 
     for l:line in l:dfoutput
         let l:match = matchlist(l:line, l:pattern) 
