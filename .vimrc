@@ -274,3 +274,6 @@ nnoremap <leader>r "zyiw:Agp <C-R>z<CR>
 
 "Turn off bracketed paste mode
 set t_BE=
+
+"Highlight trailing whitespaces
+highlight ShowTrailingWhitespace ctermbg=Red guibg=Red
