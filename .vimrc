@@ -27,6 +27,7 @@ Plugin 'rdnetto/YCM-Generator'
 Plugin 'w0rp/ale'
 Plugin 'junegunn/fzf.vim'
 Plugin 'tpope/vim-fugitive'
+Plugin 'vim-scripts/ShowTrailingWhitespace'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 
