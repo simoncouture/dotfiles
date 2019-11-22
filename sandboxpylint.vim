@@ -8,10 +8,10 @@ call ale#Set('python_pylint_auto_pipenv', 0)
 
 function! ale_linters#python#sandboxpylint#GetCommand(buffer) abort
     let l:local_path = expand('#' . a:buffer . ':p')
-    let l:remote_path =  substitute(l:local_path, '^.*shining_software/src/shining_software/','/opt/shining_software/shining_software/', '')
+    let l:remote_path =  substitute(l:local_path, '^.*shining_software/src/','/opt/shining_software/', '')
     " Check if .sandbox file exists for multiple sandboxes
     let l:sandboxname = 'sandbox'
-    let l:root_path = substitute(l:local_path, 'src/shining_software/.*', '', '')
+    let l:root_path = substitute(l:local_path, 'src/.*', '', '')
     let l:sandbox_file_path = l:root_path . '.sandbox'
     if filereadable(l:sandbox_file_path)
         let l:sandboxname = readfile(l:sandbox_file_path)[0]
