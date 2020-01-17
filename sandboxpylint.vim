@@ -32,11 +32,13 @@ function! ale_linters#python#sandboxpylint#Handle(buffer, lines) abort
     "
     " test.py:4:4: W0101 (unreachable) Unreachable code
     " let l:pattern = '\v^[a-zA-Z]?:?[^:]+:(\d+):(\d+): ([[:alnum:]]+) \(([^(]*)\) (.*)$'
-    let l:pattern = '\v^([a-zA-Z]): ?(\d+), ?(\d+): (.+) \((.+)\)$'
+    " let l:pattern = '\v^([a-zA-Z]): ?(\d+), ?(\d+): (.+) \((.+)\)$'  " This stopped working after some pylint changes
+    " let l:pattern = '\v^[\w/]+.[\w]+: ?(\d+): ?(\d+): ?(.+): (.+) \((.+)\)$'
+    let l:pattern = '\v^[0-9a-zA-Z_/]+\.[a-zA-Z0-9]+: ?(\d+): ?(\d+): ?(.+): (.+) \((.+)\)$'
     let l:output = []
 
     for l:match in ale#util#GetMatches(a:lines, l:pattern)
-	echo l:match
+	echomsg l:match
         "let l:failed = append(0, l:match)
         " let l:code = l:match[3]
         " if (l:code is# 'C0303')
@@ -49,11 +51,11 @@ function! ale_linters#python#sandboxpylint#Handle(buffer, lines) abort
              " continue
         " endif
         call add(l:output, {
-        \   'lnum': l:match[2] + 0,
-        \   'col': l:match[3] + 1,
+        \   'lnum': l:match[1] + 0,
+        \   'col': l:match[2] + 1,
         \   'text': l:match[4],
-        \   'code': l:match[5],
-        \   'type': l:match[1],
+        \   'code': l:match[3],
+        \   'type': l:match[3][:0],
         \})
     endfor
 
