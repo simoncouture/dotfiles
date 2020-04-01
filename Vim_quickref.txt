@@ -37,7 +37,7 @@ ctrl-D	Scroll a half-page down
 
 SEARCH
 f+char	Forward search to character in same line
-F+char	Backward search to character in same line			
+F+char	Backward search to character in same line
 t+char	Forward search to before character in same line
 T+char	Backward search to before character in same line
 
@@ -98,7 +98,7 @@ ctrl-W = 	Make all windows the same size
 ctrl-w r	Rotate windows in current row
 ctrl-W t	Move cursor to top-left window
 ctrl-W K	Move current window at the very top, using the full width of the screen
-ctrl-W J 	Move current window at the bottom, using the full width of the screen 
+ctrl-W J 	Move current window at the bottom, using the full width of the screen
 :mksession[!] 			Save the current editing session under Session.vim
 :source Session.vim 	Restore editing session
 
@@ -148,9 +148,11 @@ FORMATTING
 gqip		Reformat the current paragraph
 
 CODE NAVIGATION
-,t			Jump to tag -> using YCM for this
+,t			Jump to tag -> using tags
 ,p			Open tag in a split
-,f			Find occurences of identifier under cursor and display quickfix list
+,b			Go back to previous tag in tag stack
+,r			Find occurrences of identifier under cursor and display quickfix list
+,f			Open Ag find window throughout code base
 :pc			Close preview window
 ,g			Search for word under cursor throughout code
 :cw			Open window containing search results from ,g

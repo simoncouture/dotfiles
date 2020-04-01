@@ -204,9 +204,10 @@ au GUIEnter * simalt ~x
 
 let g:flake8_config_file=$HOME . '/.config/flake8'
 
-"Tabs mapping
-nmap <leader>t <C-]>
-nmap <leader>p <C-W><C-]>
+"Tags mappings
+nmap <leader>t g<C-]>
+nmap <leader>p <C-W>g<C-]>
+nmap <leader>b <C-T>
 set tags=./tags;
 
 "Vimgrep mapping
