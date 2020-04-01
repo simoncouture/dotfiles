@@ -34,7 +34,7 @@ function! ale_linters#python#sandboxpylint#Handle(buffer, lines) abort
     " let l:pattern = '\v^[a-zA-Z]?:?[^:]+:(\d+):(\d+): ([[:alnum:]]+) \(([^(]*)\) (.*)$'
     " let l:pattern = '\v^([a-zA-Z]): ?(\d+), ?(\d+): (.+) \((.+)\)$'  " This stopped working after some pylint changes
     " let l:pattern = '\v^[\w/]+.[\w]+: ?(\d+): ?(\d+): ?(.+): (.+) \((.+)\)$'
-    let l:pattern = '\v^[0-9a-zA-Z_/]+\.[a-zA-Z0-9]+: ?(\d+): ?(\d+): ?(.+): (.+) \((.+)\)$'
+    let l:pattern = '\v^[0-9a-zA-Z_/]+\.[a-zA-Z0-9]+: ?(\d+): ?(\d+): ?([A-Z]\d+): (.+) \((.+)\)$'
     let l:output = []
 
     for l:match in ale#util#GetMatches(a:lines, l:pattern)
