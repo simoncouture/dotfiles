@@ -17,12 +17,12 @@ cd vim
 ./configure --with-features=huge \
             --enable-multibyte \
 	    --enable-pythoninterp=yes \
-	    --with-python-config-dir=$(find /usr/lib/python2.7/ -name "config*" -type d)
+	    --with-python-config-dir=$(find /usr/lib/python2.7/ -name "config*" -type d) \
             --enable-gui=gtk2 \
             --enable-cscope \
 	    --prefix=/usr/local
 
-make VIMRUNTIMEDIR=/usr/local/share/vim/vim81
+make VIMRUNTIMEDIR=/usr/local/share/vim/vim82
 cd ~/vim
 sudo make install
 

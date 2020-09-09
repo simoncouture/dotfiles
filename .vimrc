@@ -28,6 +28,7 @@ Plugin 'w0rp/ale'
 Plugin 'junegunn/fzf.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'vim-scripts/ShowTrailingWhitespace'
+Plugin 'mgedmin/python-imports.vim'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 
@@ -279,3 +280,6 @@ set t_BE=
 
 "Highlight trailing whitespaces
 highlight ShowTrailingWhitespace ctermbg=Red guibg=Red
+
+"Mapping for python auto-import
+nmap <leader><Space> :ImportName<CR>
