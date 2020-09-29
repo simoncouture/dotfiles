@@ -189,6 +189,8 @@ autocmd FileType c,cpp,cu,h,hpp nmap <F5> :!make<CR>
 
 "Have You complete me not prompt when loading .ycm_extra_conf.py file
 let g:ycm_confirm_extra_conf=0
+" turn on tag completion
+let g:ycm_collect_identifiers_from_tags_files=1
 
 "Close preview window after insertion
 let g:ycm_autoclose_preview_window_after_insertion = 1

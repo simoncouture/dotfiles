@@ -53,6 +53,33 @@ function! ToggleDocTestMode()
     return 0
 endfunction
 
+"Returns path of shining_software/src of project being edited
+function! GetShiningPath()
+    let l:filepath = expand('%:p')
+    let l:match3 = matchlist(l:filepath, '\v^(.*/shining_software/src/)')
+    if (len(l:match3) == 0)
+        return -1
+    endif
+    let l:shining_path = l:match3[1]
+    return l:shining_path
+endfunction
+
+"Updates ctags in current project
+function! UpdateTagsShining()
+    let l:shining_path = GetShiningPath()
+    if (l:shining_path == -1)
+	echo "Could not find shining_software directory"
+	return
+    endif
+    let l:shining_software_subpath = l:shining_path . "shining_software/"
+    let l:brainos_subpath = l:shining_path . "brainos/"
+    let l:cpp_subpath = l:shining_path . "cpp/"
+    let l:cuda_subpath = l:shining_path . "cuda/"
+    let l:opencl_subpath = l:shining_path . "opencl/"
+    let l:ctags_dirs = l:shining_software_subpath . " " . l:brainos_subpath . " " . l:cpp_subpath . " " . l:cuda_subpath . " " . l:opencl_subpath
+    let l:ctags_file_path = l:shining_path . "tags"
+    execute "!ctags -R --fields=+l -f " . l:ctags_file_path . " " . l:ctags_dirs
+endfunction
 
 let sandboxrunning = CheckIfSandboxRunning()
 if (sandboxrunning == 1)
