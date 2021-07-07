@@ -25,6 +25,7 @@ Plugin 'Valloric/YouCompleteMe'
 " Plugin 'dusktreader/vim-flake8'  " Need to git checkout dusktreader/64_config_file_option
 Plugin 'rdnetto/YCM-Generator'
 Plugin 'w0rp/ale'
+Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'vim-scripts/ShowTrailingWhitespace'
@@ -65,7 +66,7 @@ endif
 " Also switch on highlighting the last used search pattern.
 if &t_Co > 2 || has("gui_running")
   syntax on
-  set hlsearch 
+  set hlsearch
   nmap <silent> ,/ :nohlsearch<CR>
 endif
 
@@ -141,9 +142,6 @@ colorscheme hemisu
 
 " Shortcut to edit this file
 nmap <silent> <leader>ev :e $MYVIMRC<cr>
-
-" Remap of CTRL-6 command to swap between 2 buffers
-map <c-e> <c-6>
 
 " Allows edited buffers to be hidden
 set hidden
@@ -264,7 +262,7 @@ function! AgProjectFun(query, ...)
   let ag_opts = len(args) > 1 && type(args[0]) == type('') ? remove(args, 0) : ''
   let tagfile_list = tagfiles()
   let tagfile_path = empty(tagfile_list) ? '' : fnamemodify(tagfile_list[0], ':p:h')
-  let command = ag_opts . ' ' . '--python --color-path "0;32" --color-line-number "1;35"' . ' ' . fzf#shellescape(query) . ' ' . tagfile_path
+  let command = ag_opts . ' ' . '--python --cpp --color-path "0;32" --color-line-number "1;35"' . ' ' . fzf#shellescape(query) . ' ' . tagfile_path
   echo command
   return call('fzf#vim#ag_raw', insert(args, command, 0))
 endfunction
@@ -285,3 +283,24 @@ highlight ShowTrailingWhitespace ctermbg=Red guibg=Red
 
 "Mapping for python auto-import
 nmap <leader><Space> :ImportName<CR>
+
+"Mouse scrolling for Mac...
+map <ScrollWheelUp> <C-Y>
+map <ScrollWheelDown> <C-E>
+
+
+"Updates ctags in current git project
+function! UpdateTags()
+    let l:repo_path = systemlist('git rev-parse --show-toplevel')[0]
+    if (v:shell_error != 0)
+	echo "Not inside a git repository, can't update tags"
+	return
+    endif
+    let l:repo_path_rel = systemlist('git rev-parse --show-cdup')[0]
+    if (match(l:repo_path_rel, '\.') == -1)
+	let l:repo_path_rel = '.'
+    endif
+    let l:ctags_file_path = l:repo_path . "/tags"
+    let l:command = "!git -C " . l:repo_path_rel . " ls-files | ctags --fields=+l -L - -f " . l:ctags_file_path
+    execute l:command
+endfunction
