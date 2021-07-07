@@ -301,6 +301,6 @@ function! UpdateTags()
 	let l:repo_path_rel = '.'
     endif
     let l:ctags_file_path = l:repo_path . "/tags"
-    let l:command = "!git -C " . l:repo_path_rel . " ls-files | ctags --fields=+l -L - -f " . l:ctags_file_path
+    let l:command = "!git ls-files ". l:repo_path_rel . "| ctags --fields=+l -L - -f " . l:ctags_file_path
     execute l:command
 endfunction
