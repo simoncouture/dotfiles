@@ -30,6 +30,7 @@ Plugin 'junegunn/fzf.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'vim-scripts/ShowTrailingWhitespace'
 Plugin 'mgedmin/python-imports.vim'
+Plugin 'JamshedVesuna/vim-markdown-preview'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 
@@ -49,6 +50,13 @@ set history=50		" keep 50 lines of command line history
 set ruler		" show the cursor position all the time
 set showcmd		" display incomplete commands
 set incsearch		" do incremental searching
+" set statusline+=%F      " show full path of file in status bar
+set statusline=%F\ %h%w%m%r%=%-14.(%l,%c%V%)\ %P
+
+" default tab spacings
+set expandtab
+set shiftwidth=4
+set softtabstop=4
 
 " Don't use Ex mode, use Q for formatting
 "map Q gq
@@ -147,7 +155,7 @@ nmap <silent> <leader>ev :e $MYVIMRC<cr>
 set hidden
 
 "F5 mapping to run python scripts
-autocmd BufRead *.py nmap <F5> :!python %<CR>
+autocmd BufRead *.py nmap <F5> :!python3 %<CR>
 
 
 "Run Flake8 after every buffer save
@@ -216,7 +224,12 @@ function ShiningPath()
 	let l:src_path = expand('%:p')
 	return substitute(l:src_path, '/src.*$','/src','')
 endfunction
-nmap <leader>g "zyiw:exe "vimgrep /".@z."/gj ".ShiningPath()."/**/*.py"
+
+function GetRepoPath()
+        let l:repo_path = systemlist('git rev-parse --show-toplevel')[0]
+        return l:repo_path
+endfunction
+" nmap <leader>g "zyiw:exe "vimgrep /".@z."/gj ".GetRepoPath()."/**/*.py ".GetRepoPath()."/**/*.swift ".GetRepoPath()."/**/*.c* ".GetRepoPath()."/**/*.h* "
 
 "ALE settings
 let g:ale_set_quickfix = 1
@@ -250,6 +263,7 @@ let g:fzf_colors =
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
 
+
 "Custom Ag command for fzf to search only file content
 "and use root of search corresponding to the tags file
 function! AgProjectFun(query, ...)
@@ -262,7 +276,7 @@ function! AgProjectFun(query, ...)
   let ag_opts = len(args) > 1 && type(args[0]) == type('') ? remove(args, 0) : ''
   let tagfile_list = tagfiles()
   let tagfile_path = empty(tagfile_list) ? '' : fnamemodify(tagfile_list[0], ':p:h')
-  let command = ag_opts . ' ' . '--python --cpp --color-path "0;32" --color-line-number "1;35"' . ' ' . fzf#shellescape(query) . ' ' . tagfile_path
+  let command = ag_opts . ' ' . '--python --cpp --swift --color-path "0;32" --color-line-number "1;35"' . ' ' . fzf#shellescape(query) . ' ' . tagfile_path
   echo command
   return call('fzf#vim#ag_raw', insert(args, command, 0))
 endfunction
@@ -274,6 +288,7 @@ command! -bang -nargs=* Agp2 call AgProjectFun(<q-args>, <bang>0)
 
 nnoremap <leader>f :Agp<CR>
 nnoremap <leader>r "zyiw:Agp <C-R>z<CR>
+nnoremap <leader>F :GFiles<CR>
 
 "Turn off bracketed paste mode
 set t_BE=
@@ -288,7 +303,6 @@ nmap <leader><Space> :ImportName<CR>
 map <ScrollWheelUp> <C-Y>
 map <ScrollWheelDown> <C-E>
 
-
 "Updates ctags in current git project
 function! UpdateTags()
     let l:repo_path = systemlist('git rev-parse --show-toplevel')[0]
@@ -301,6 +315,13 @@ function! UpdateTags()
 	let l:repo_path_rel = '.'
     endif
     let l:ctags_file_path = l:repo_path . "/tags"
-    let l:command = "!git ls-files ". l:repo_path_rel . "| ctags --fields=+l -L - -f " . l:ctags_file_path
+    " let l:command = "!git ls-files --full-name ". l:repo_path_rel . " | sed 's,^," . l:repo_path . "/,' | ctags --fields=+l -L - -f " . l:ctags_file_path
+    let l:command = "!git ls-files --full-name ". l:repo_path_rel . " | sed 's,^," . l:repo_path . "/,' | ctags -L - -f " . l:ctags_file_path
     execute l:command
 endfunction
+
+"Options for vim-markdown-preview
+let vim_markdown_preview_github=1
+
+" disable ALE cc linter until i can make it work
+let g:ale_linters_ignore = ['cc']
