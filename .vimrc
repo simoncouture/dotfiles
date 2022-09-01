@@ -127,6 +127,11 @@ map <c-k> <c-w>k
 map <c-l> <c-w>l
 map <c-h> <c-w>h
 
+" tab movement mappings
+nmap tl gt
+nmap th gT
+nmap tn :$tabnew<CR>
+
 " Redefine leader key from \ to ,
 let mapleader=","
 
@@ -300,8 +305,8 @@ highlight ShowTrailingWhitespace ctermbg=Red guibg=Red
 nmap <leader><Space> :ImportName<CR>
 
 "Mouse scrolling for Mac...
-map <ScrollWheelUp> <C-Y>
-map <ScrollWheelDown> <C-E>
+" map <ScrollWheelUp> <C-Y>
+" map <ScrollWheelDown> <C-E>
 
 "Updates ctags in current git project
 function! UpdateTags()
