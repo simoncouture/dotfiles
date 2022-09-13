@@ -307,21 +307,40 @@ nmap <leader><Space> :ImportName<CR>
 "Mouse scrolling for Mac...
 " map <ScrollWheelUp> <C-Y>
 " map <ScrollWheelDown> <C-E>
+"
+
+" Select specific directories to tags for some repos where tagging everything
+" is too slow
+let s:repo_to_tag_dir = {}
+let s:repo_to_tag_dir.DE_SDoF = ['DE_DL']
 
 "Updates ctags in current git project
 function! UpdateTags()
     let l:repo_path = systemlist('git rev-parse --show-toplevel')[0]
+    let l:repo_name = fnamemodify(l:repo_path, ':t')
     if (v:shell_error != 0)
 	echo "Not inside a git repository, can't update tags"
 	return
     endif
     let l:repo_path_rel = systemlist('git rev-parse --show-cdup')[0]
     if (match(l:repo_path_rel, '\.') == -1)
-	let l:repo_path_rel = '.'
+	let l:repo_path_rel = './'
     endif
     let l:ctags_file_path = l:repo_path . "/tags"
     " let l:command = "!git ls-files --full-name ". l:repo_path_rel . " | sed 's,^," . l:repo_path . "/,' | ctags --fields=+l -L - -f " . l:ctags_file_path
-    let l:command = "!git ls-files --full-name ". l:repo_path_rel . " | sed 's,^," . l:repo_path . "/,' | ctags -L - -f " . l:ctags_file_path
+
+    " check if we are in a repo specified in s:repo_to_tag_dir variable
+    if (has_key(s:repo_to_tag_dir, l:repo_name))
+        let l:dirs_to_tag = ""
+        for directory in s:repo_to_tag_dir[l:repo_name]
+            let l:dirs_to_tag = l:dirs_to_tag . l:repo_path_rel . directory . " "
+        endfor
+    else
+        let l:dirs_to_tag = l:repo_path_rel
+    endif
+
+    " let l:command = "!git ls-files --full-name ". l:repo_path_rel . " | sed 's,^," . l:repo_path . "/,' | ctags -L - -f " . l:ctags_file_path
+    let l:command = "!git ls-files --full-name ". l:dirs_to_tag . " | sed 's,^," . l:repo_path . "/,' | ctags -L - -f " . l:ctags_file_path
     execute l:command
 endfunction
 
@@ -330,3 +349,6 @@ let vim_markdown_preview_github=1
 
 " disable ALE cc linter until i can make it work
 let g:ale_linters_ignore = ['cc']
+
+" Gblame
+:command! Gblame Git blame
