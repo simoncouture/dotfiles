@@ -352,3 +352,7 @@ let g:ale_linters_ignore = ['cc']
 
 " Gblame
 :command! Gblame Git blame
+
+" filter some files from netrw
+let g:netrw_list_hide= '.*\.swp$,.*\~$'
+
