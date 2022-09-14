@@ -130,7 +130,7 @@ map <c-h> <c-w>h
 " tab movement mappings
 nmap tl gt
 nmap th gT
-nmap tn :$tabnew<CR>
+nmap tn :$tabnew %<CR>
 
 " Redefine leader key from \ to ,
 let mapleader=","
