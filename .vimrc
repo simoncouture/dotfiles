@@ -41,11 +41,11 @@ call vundle#end()            " required
 filetype plugin indent on
 
 
-if has("vms")
-  set nobackup		" do not keep a backup file, use versions instead
-else
-  set backup		" keep a backup file
-endif
+"if has("vms")
+"  set nobackup		" do not keep a backup file, use versions instead
+"else
+"  set backup		" keep a backup file
+"endif
 set history=50		" keep 50 lines of command line history
 set ruler		" show the cursor position all the time
 set showcmd		" display incomplete commands
@@ -297,6 +297,7 @@ nnoremap <leader>F :GFiles<CR>
 
 "Turn off bracketed paste mode
 set t_BE=
+set t_TI=
 
 "Highlight trailing whitespaces
 highlight ShowTrailingWhitespace ctermbg=Red guibg=Red
