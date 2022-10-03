@@ -131,6 +131,7 @@ map <c-h> <c-w>h
 nmap tl gt
 nmap th gT
 nmap tn :$tabnew %<CR>
+nmap tc :$tabclose<CR>
 
 " Redefine leader key from \ to ,
 let mapleader=","
@@ -281,7 +282,7 @@ function! AgProjectFun(query, ...)
   let ag_opts = len(args) > 1 && type(args[0]) == type('') ? remove(args, 0) : ''
   let tagfile_list = tagfiles()
   let tagfile_path = empty(tagfile_list) ? '' : fnamemodify(tagfile_list[0], ':p:h')
-  let command = ag_opts . ' ' . '--python --cpp --swift --color-path "0;32" --color-line-number "1;35"' . ' ' . fzf#shellescape(query) . ' ' . tagfile_path
+  let command = ag_opts . ' ' . '--python --cpp --color-path "0;32" --color-line-number "1;35"' . ' ' . fzf#shellescape(query) . ' ' . tagfile_path
   echo command
   return call('fzf#vim#ag_raw', insert(args, command, 0))
 endfunction
@@ -296,7 +297,8 @@ nnoremap <leader>r "zyiw:Agp <C-R>z<CR>
 nnoremap <leader>F :GFiles<CR>
 
 "Turn off bracketed paste mode
-set t_BE=
+let &t_TI = ""
+let &t_TE = ""
 
 "Highlight trailing whitespaces
 highlight ShowTrailingWhitespace ctermbg=Red guibg=Red
@@ -316,7 +318,9 @@ let s:repo_to_tag_dir.DE_SDoF = ['DE_DL']
 
 "Updates ctags in current git project
 function! UpdateTags()
-    let l:repo_path = systemlist('git rev-parse --show-toplevel')[0]
+    let l:repo_path = systemlist('cd ' . expand('%:p:h') . ' && git rev-parse --show-toplevel')[0]
+    echo l:repo_path
+    return
     let l:repo_name = fnamemodify(l:repo_path, ':t')
     if (v:shell_error != 0)
 	echo "Not inside a git repository, can't update tags"
@@ -356,3 +360,5 @@ let g:ale_linters_ignore = ['cc']
 " filter some files from netrw
 let g:netrw_list_hide= '.*\.swp$,.*\~$'
 
+" dont mess with imports too much
+let g:pythonImportsUseAleFix=0
