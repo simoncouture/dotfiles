@@ -319,8 +319,6 @@ let s:repo_to_tag_dir.DE_SDoF = ['DE_DL']
 "Updates ctags in current git project
 function! UpdateTags()
     let l:repo_path = systemlist('cd ' . expand('%:p:h') . ' && git rev-parse --show-toplevel')[0]
-    echo l:repo_path
-    return
     let l:repo_name = fnamemodify(l:repo_path, ':t')
     if (v:shell_error != 0)
 	echo "Not inside a git repository, can't update tags"
