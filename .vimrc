@@ -24,7 +24,7 @@ Plugin 'Valloric/YouCompleteMe'
 " Plugin 'nvie/vim-flake8'
 " Plugin 'dusktreader/vim-flake8'  " Need to git checkout dusktreader/64_config_file_option
 Plugin 'rdnetto/YCM-Generator'
-Plugin 'w0rp/ale'
+Plugin 'dense-analysis/ale'
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
 Plugin 'tpope/vim-fugitive'
@@ -130,8 +130,8 @@ map <c-h> <c-w>h
 " tab movement mappings
 nmap tl gt
 nmap th gT
-nmap tn :$tabnew %<CR>
-nmap tc :$tabclose<CR>
+nmap tn :tabnew %<CR>
+nmap tc :tabclose<CR>
 
 " Redefine leader key from \ to ,
 let mapleader=","
@@ -282,7 +282,8 @@ function! AgProjectFun(query, ...)
   let ag_opts = len(args) > 1 && type(args[0]) == type('') ? remove(args, 0) : ''
   let tagfile_list = tagfiles()
   let tagfile_path = empty(tagfile_list) ? '' : fnamemodify(tagfile_list[0], ':p:h')
-  let command = ag_opts . ' ' . '--python --cpp --color-path "0;32" --color-line-number "1;35"' . ' ' . fzf#shellescape(query) . ' ' . tagfile_path
+  let l:search_path = tagfile_path . "/DE_DL"
+  let command = ag_opts . ' ' . '--python --cpp --color-path "0;32" --color-line-number "1;35"' . ' ' . fzf#shellescape(query) . ' ' . l:search_path
   echo command
   return call('fzf#vim#ag_raw', insert(args, command, 0))
 endfunction
@@ -318,7 +319,7 @@ let s:repo_to_tag_dir.DE_SDoF = ['DE_DL']
 
 "Updates ctags in current git project
 function! UpdateTags()
-    let l:repo_path = systemlist('cd ' . expand('%:p:h') . ' && git rev-parse --show-toplevel')[0]
+    let l:repo_path = systemlist('git rev-parse --show-toplevel')[0]
     let l:repo_name = fnamemodify(l:repo_path, ':t')
     if (v:shell_error != 0)
 	echo "Not inside a git repository, can't update tags"
