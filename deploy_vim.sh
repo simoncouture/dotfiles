@@ -42,15 +42,13 @@ sudo rm -rf vim
 # Install Vundle plugin manager
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
-# Get configuration files
-cd ~
-git clone https://github.com/simoncouture/dotfiles.git
-cp ~/dotfiles/.vimrc ~/
+# Link / copy configuration files
+ln -s ~/dotfiles/.vimrc ~/
 cp -R ~/dotfiles/.vim/colors ~/.vim/
-cp -R ~/dotfiles/.vim/ftplugin ~/.vim/
+ln -s ~/dotfiles/.vim/ftplugin ~/.vim/
 cp ~/dotfiles/sandboxpylint.vim ~/.vim/bundle/ale/ale_linters/python/
 cp ~/dotfiles/doclint.vim ~/.vim/bundle/ale/ale_linters/python/
-cp ~/dotfiles/.flake8 ~/
+ln -s ~/dotfiles/.flake8 ~/
 
 # Install fzf
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
