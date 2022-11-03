@@ -18,14 +18,14 @@ cd vim
             --enable-multibyte \
             --enable-rubyinterp=yes \
             --enable-python3interp=yes \
-            --with-python3-config-dir=$(python3-config --configdir) \
+            --with-python3-config-dir=$(python3.6-config --configdir) \
             --enable-perlinterp=yes \
             --enable-luainterp=yes \
             --enable-gui=gtk2 \
             --enable-cscope \
             --prefix=/usr/local
 
-make VIMRUNTIMEDIR=/usr/local/share/vim/vim82
+make
 cd ~/vim
 sudo make install
 
