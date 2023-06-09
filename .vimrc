@@ -185,6 +185,7 @@ set laststatus=2
 nnoremap <leader>qq :cn<CR>
 nnoremap <leader>qp :cp<CR>
 nnoremap <leader>qc :cclose<CR>
+nnoremap <leader>qo :copen<CR>
 nnoremap <leader>qf :cc 1<CR>
 
 "Nerdcommenter remaps
@@ -206,6 +207,11 @@ let g:ycm_collect_identifiers_from_tags_files=1
 
 "Close preview window after insertion
 let g:ycm_autoclose_preview_window_after_insertion = 1
+
+" Disable ycm in netrw buffers
+let g:ycm_filetype_blacklist = {
+    \ 'netrw': 1
+\}
 
 "Find (YcmComplete GoToReferences) mapping:
 " nnoremap <leader>f :YcmCompleter GoToReferences<CR>
@@ -244,6 +250,7 @@ let g:ale_echo_msg_warning_str = 'W'
 let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_lint_on_enter = 0
+let g:ale_virtualtext_cursor = 'disabled'
 
 "Function to toggle doc checking on or off
 command! -nargs=0 TestDoc call ToggleDocTestMode()
