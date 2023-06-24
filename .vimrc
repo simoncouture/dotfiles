@@ -172,7 +172,7 @@ nmap ,bp iimport pdb; pdb.set_trace();
 nmap ,ibp ifrom shining_software.costmaps.map_drawing_utils import *;
 
 "Remap esc key to jj
-inoremap jj <esc>
+inoremap <nowait> jj <esc>
 
 "For Vim-Latex
 set grepprg=grep\ -nH\ $*
