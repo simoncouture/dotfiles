@@ -1,5 +1,5 @@
 " vimrc example file:
-"
+
 " Use Vim settings, rather then Vi settings (much better!).
 " This must be first, because it changes other options as a side effect.
 set nocompatible
@@ -9,6 +9,12 @@ set backspace=indent,eol,start
 
 "Show line numbers
 set number
+
+" Color scheme
+set t_Co=256
+set t_RB=
+colorscheme hemisu
+set background=light
 
 "Vundle
 filetype off  "Required for Vundle, will turn it back on later
@@ -149,11 +155,6 @@ let mapleader=","
 " Tag navigation remap
 " To be figured out
 
-" Color scheme
-set t_Co=256
-set background=light
-colorscheme hemisu
-
 " Shortcut to edit this file
 nmap <silent> <leader>ev :e $MYVIMRC<cr>
 
@@ -289,7 +290,7 @@ function! AgProjectFun(query, ...)
   let ag_opts = len(args) > 1 && type(args[0]) == type('') ? remove(args, 0) : ''
   let tagfile_list = tagfiles()
   let tagfile_path = empty(tagfile_list) ? '' : fnamemodify(tagfile_list[0], ':p:h')
-  let l:search_path = tagfile_path . "/DE_DL"
+  let l:search_path = tagfile_path
   let command = ag_opts . ' ' . '--python --cpp --color-path "0;32" --color-line-number "1;35"' . ' ' . fzf#shellescape(query) . ' ' . l:search_path
   echo command
   return call('fzf#vim#ag_raw', insert(args, command, 0))
@@ -368,3 +369,6 @@ let g:netrw_list_hide= '.*\.swp$,.*\~$'
 
 " dont mess with imports too much
 let g:pythonImportsUseAleFix=0
+
+" this avoids changing file's inode (useful when editing files mounted in Docker)
+set backupcopy=yes

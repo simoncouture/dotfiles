@@ -2,7 +2,7 @@
 
 # Install pre-requisites
 sudo apt install libncurses5-dev libgtk2.0-dev libatk1.0-dev \
-libcairo2-dev libx11-dev libxpm-dev libxt-dev python2-dev \
+libcairo2-dev libx11-dev libxpm-dev libxt-dev \
 python3-dev ruby-dev lua5.2 liblua5.2-dev libperl-dev git
 
 # Remove previous versions of vim
@@ -18,15 +18,14 @@ cd vim
             --enable-multibyte \
             --enable-rubyinterp=yes \
             --enable-python3interp=yes \
-            --with-python3-config-dir=$(python3.6-config --configdir) \
+            --with-python3-config-dir=$(python3-config --configdir) \
             --enable-perlinterp=yes \
             --enable-luainterp=yes \
             --enable-gui=gtk2 \
             --enable-cscope \
             --prefix=/usr/local
 
-make
-cd ~/vim
+make VIMRUNTIMEDIR=/usr/local/share/vim/vim91
 sudo make install
 
 # Make vim default editor
