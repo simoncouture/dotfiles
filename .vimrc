@@ -1,5 +1,5 @@
 " vimrc example file:
-"
+
 " Use Vim settings, rather then Vi settings (much better!).
 " This must be first, because it changes other options as a side effect.
 set nocompatible
@@ -9,6 +9,12 @@ set backspace=indent,eol,start
 
 "Show line numbers
 set number
+
+" Color scheme
+set t_Co=256
+set t_RB=
+colorscheme hemisu
+set background=light
 
 "Vundle
 filetype off  "Required for Vundle, will turn it back on later
@@ -149,11 +155,6 @@ let mapleader=","
 
 " Tag navigation remap
 " To be figured out
-
-" Color scheme
-set t_Co=256
-set background=light
-colorscheme hemisu
 
 " Shortcut to edit this file
 nmap <silent> <leader>ev :e $MYVIMRC<cr>
@@ -384,3 +385,6 @@ let g:pythonImportsUseAleFix=0
 
 " Freed <C-l> in Netrw
 nmap <leader><c-r> <Plug>NetrwRefresh
+
+" this avoids changing file's inode (useful when editing files mounted in Docker)
+set backupcopy=yes
