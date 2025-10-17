@@ -130,7 +130,8 @@ map <c-h> <c-w>h
 " tab movement mappings
 nmap tl gt
 nmap th gT
-nmap tn :$tabnew %<CR>
+" nmap tn :$tabnew %<CR>
+nmap tn :execute "$tabnew +" . line('.') . " %"<CR>
 nmap tc :tabclose<CR>
 
 " Redefine leader key from \ to ,
@@ -187,6 +188,11 @@ nnoremap <leader>qp :cp<CR>
 nnoremap <leader>qc :cclose<CR>
 nnoremap <leader>qo :copen<CR>
 nnoremap <leader>qf :cc 1<CR>
+nnoremap <leader>lq :lne<CR>
+nnoremap <leader>lp :lp<CR>
+nnoremap <leader>lc :lclose<CR>
+nnoremap <leader>lo :lopen<CR>
+nnoremap <leader>lf :ll 1<CR>
 
 "Nerdcommenter remaps
 let g:NERDCreateDefaultMappings = 0
@@ -212,6 +218,8 @@ let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_filetype_blacklist = {
     \ 'netrw': 1
 \}
+
+let g:ycm_max_diagnostics_to_display = 100
 
 "Find (YcmComplete GoToReferences) mapping:
 " nnoremap <leader>f :YcmCompleter GoToReferences<CR>
@@ -244,7 +252,7 @@ endfunction
 " nmap <leader>g "zyiw:exe "vimgrep /".@z."/gj ".GetRepoPath()."/**/*.py ".GetRepoPath()."/**/*.swift ".GetRepoPath()."/**/*.c* ".GetRepoPath()."/**/*.h* "
 
 "ALE settings
-let g:ale_set_quickfix = 1
+let g:ale_set_quickfix = 0
 let g:ale_echo_msg_error_str = 'E'
 let g:ale_echo_msg_warning_str = 'W'
 let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
@@ -289,7 +297,7 @@ function! AgProjectFun(query, ...)
   let ag_opts = len(args) > 1 && type(args[0]) == type('') ? remove(args, 0) : ''
   let tagfile_list = tagfiles()
   let tagfile_path = empty(tagfile_list) ? '' : fnamemodify(tagfile_list[0], ':p:h')
-  let l:search_path = tagfile_path . "/DE_DL"
+  let l:search_path = tagfile_path
   let command = ag_opts . ' ' . '--python --cpp --color-path "0;32" --color-line-number "1;35"' . ' ' . fzf#shellescape(query) . ' ' . l:search_path
   echo command
   return call('fzf#vim#ag_raw', insert(args, command, 0))
@@ -356,6 +364,7 @@ endfunction
 
 "Options for vim-markdown-preview
 let vim_markdown_preview_github=1
+let vim_markdown_preview_toggle=0
 
 " disable ALE cc linter until i can make it work
 let g:ale_linters_ignore = ['cc']
@@ -368,3 +377,10 @@ let g:netrw_list_hide= '.*\.swp$,.*\~$'
 
 " dont mess with imports too much
 let g:pythonImportsUseAleFix=0
+
+" Run Latex
+:nmap <leader>la :!pdflatex %<CR>
+:nmap <leader>lb :!bibtex %:r<CR>
+
+" Freed <C-l> in Netrw
+nmap <leader><c-r> <Plug>NetrwRefresh
