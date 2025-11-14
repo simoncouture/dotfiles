@@ -222,6 +222,31 @@ let g:ycm_filetype_blacklist = {
 
 let g:ycm_max_diagnostics_to_display = 100
 
+" Docker-base clangd LSP for YCM
+let s:repo_path = systemlist('git rev-parse --show-toplevel')
+if !empty(s:repo_path)
+    let s:repo_path = s:repo_path[0]
+    let s:sandbox_clangd_path = s:repo_path . '/docker/sandbox_clangd.sh'
+    if filereadable(s:sandbox_clangd_path)
+        let g:ycm_language_server =
+          \ [
+          \   {
+          \     'name': 'clangd',
+          \     'cmdline': [ s:repo_path . '/docker/sandbox_clangd.sh' ],
+          \     'filetypes': ['c', 'cpp']
+          \   }
+          \ ]
+    endif
+endif
+" Rely on clangd for autocompletion, not ycm
+let g:ycm_clangd_uses_ycmd_caching = 0
+
+" Configure YCM to provide semantic completion when typing
+let g:ycm_semantic_triggers =  {
+  \   'c,cpp,objc': [ 're!\w{3}', '_' ],
+  \ }
+
+
 "Find (YcmComplete GoToReferences) mapping:
 " nnoremap <leader>f :YcmCompleter GoToReferences<CR>
 " nnoremap <leader>t :YcmCompleter GoTo<CR>
