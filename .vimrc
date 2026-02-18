@@ -222,7 +222,7 @@ let g:ycm_filetype_blacklist = {
 
 let g:ycm_max_diagnostics_to_display = 100
 
-" Docker-base clangd LSP for YCM
+" Docker-base clangd LSP for YCM and ALE
 let s:repo_path = systemlist('git rev-parse --show-toplevel')
 if !empty(s:repo_path)
     let s:repo_path = s:repo_path[0]
@@ -236,6 +236,7 @@ if !empty(s:repo_path)
           \     'filetypes': ['c', 'cpp']
           \   }
           \ ]
+        let g:ale_cpp_clangd_executable = s:repo_path . '/docker/sandbox_clangd.sh'
     endif
 endif
 " Rely on clangd for autocompletion, not ycm
